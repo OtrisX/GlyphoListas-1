@@ -1,0 +1,13 @@
+/glyphopack.sty
+/xpartials
+*.tex
+*.sty
+*.cpy
+*.aux
+*.synctex.gz
+*.out
+*.fls
+*.fdb_latexmk
+*.toc
+*.log
+
