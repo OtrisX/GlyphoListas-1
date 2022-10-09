@@ -1,0 +1,711 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{/home/fernando/Documents/TeoremaMilitarV2/teoremapack}[2022/04/07 Teorema]
+\RequirePackage[a4paper, left=0.3in , right=0.3in , top = .9in , bottom=0.45in , headheight=65pt]{geometry}
+
+\RequirePackage{multicol}
+\RequirePackage{setspace}
+\RequirePackage{fancyhdr}
+\RequirePackage{setspace} 
+\RequirePackage{ragged2e}
+%\RequirePackage{microtype}
+\RequirePackage{refcount}
+\RequirePackage{standalone}
+\RequirePackage{clipboard}
+\RequirePackage{parskip}
+\RequirePackage[explicit]{titlesec}
+\RequirePackage{catchfile}
+\RequirePackage{afterpage}
+\RequirePackage{csquotes}
+\RequirePackage{cuted}
+\RequirePackage{siunitx}
+\RequirePackage{amsmath} 
+\RequirePackage{mathtools}
+\RequirePackage{cancel}
+\RequirePackage{bropd}
+\RequirePackage{physics}
+\RequirePackage{tgtermes}
+\RequirePackage{scalerel}
+\RequirePackage{soul}
+\RequirePackage{xlop}
+\RequirePackage{hyperref}
+\RequirePackage{verse}
+\RequirePackage{pyluatex}
+\RequirePackage{chemformula}
+\RequirePackage{chemfig}
+\RequirePackage{listofitems}
+\RequirePackage{cases}
+\RequirePackage{xfrac}
+
+\begin{python}
+  import os
+
+  nomeDoArquivo = os.path.basename(os.getcwd()).split(" - ",1)[1]
+  frenteComNumero = os.path.basename(os.getcwd()).split(" - ",1)[0]
+  numerolista = frenteComNumero[1:]
+  frente = frenteComNumero[0]
+  materia = os.getcwd().split(os.path.sep)[-3]
+  pathcapas = "/home/fernando/Documents/TeoremaMilitarV2/wdfCovers/"
+  match materia:
+      case "Matemática":
+          pdfcover = pathcapas + "pdfCoverCesar.pdf"
+          professor = "Cesar Annunciato"
+      case "Português":
+          pdfcover = pathcapas + "pdfCoverSiqueira.pdf"
+          professor = "Marcos Siqueira"
+      case "História":
+          professor = "Josiane Nunes"
+      case "Química":
+          pdfcover = pathcapas + "pdfCoverEva.pdf"
+          professor = "Eva"
+      case _:
+          professor = "erro"
+\end{python}
+
+% ---------------------------------------------------------------------------- %
+%                                    Código                                    %
+% ---------------------------------------------------------------------------- %
+
+%%%%%%%%%%%%%%%%%%% Macros  %%%%%%%%%%%%%%%%%%% 
+
+\RequirePackage{xparse}
+\RequirePackage{etoolbox}
+\RequirePackage{xfp}
+
+%%%%%%%%%%%%%%%%%%% Python  %%%%%%%%%%%%%%%%%%% 
+
+\newcommand{\gabflag}{}
+
+\newcommand{\subgabflag}{}
+
+\newcommand\materia{\py{materia}}
+
+\newcommand\frente{\py{frente}}
+
+\newcommand\numerolista{\py{numerolista}}
+
+\newcommand\myemail[2]
+{
+  \href[pdfnewwindow=true]{https://docs.google.com/forms/d/e/1FAIpQLScaIm8IxVGmiLz7vfbLSezg0qkVUXVVagMWJJrdqY6ADCTDxA/viewform?usp=pp\_url\&entry.1826650547=\frente\&entry.492093689=\numerolista\&entry.394606865=#2}{#1}
+}
+
+% ---------------------------------------------------------------------------- %
+%                                   Gráficos                                   %
+% ---------------------------------------------------------------------------- %
+
+%%%%%%%%%%%%%%%%%%% Imagens  %%%%%%%%%%%%%%%%%%% 
+
+\RequirePackage{wrapfig}
+\RequirePackage{graphicx}
+\RequirePackage{pdfpages}
+\RequirePackage{svg}
+
+%%%%%%%%%%%%%%%%%%% Tabelas  %%%%%%%%%%%%%%%%%%% 
+
+\RequirePackage{array,multirow,tabularx, tabulary, makecell, colortbl, booktabs, diagbox}
+
+\RequirePackage{tabularray}
+
+
+%%%%%%%%%%%%%%%%%%% TCOLORBOX  %%%%%%%%%%%%%%%%%%% 
+
+\RequirePackage[breakable]{tcolorbox}
+\tcbuselibrary{most}
+
+\tcbset{questaoFigura/.style={blanker, sidebyside adapt = right, sidebyside gap=2mm, width=262.5pt}}
+
+\tcbset{tikzpic/.style={blanker, hbox}}
+
+\tcbset{quote/.style={
+  enhanced,
+  frame hidden,
+  breakable,
+  top=4mm,
+  bottom=3mm,
+  right = 2mm,
+  left = 2mm,
+  boxsep=0mm,
+  borderline horizontal={2pt}{0pt}{maincolor},
+  colback = maincolor!3!white,
+  attach boxed title to top center={yshift=-3mm,yshifttext=-1mm},
+  boxed title style={size=small,colback=maincolor},
+  title = Texto para Questão,
+}}
+
+\tcbset{rascsol/.style={fonttitle = \bfseries,
+    colframe=maincolor,
+    colback = white,
+    fonttitle = \large\bfseries,
+    titlerule = 5pt,
+    toprule = 5pt,
+    middle=10pt, 
+    sharp corners, breakable}}
+
+%%%%%%%%%%%%%%%%%%% TIKZ  %%%%%%%%%%%%%%%%%%% 
+
+\RequirePackage{tikz}
+\RequirePackage{pgf}
+\RequirePackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\RequirePackage{tkz-euclide}
+\RequirePackage[tikz]{multicolrule}
+\RequirePackage{tikzpagenodes}
+\usetikzlibrary{patterns, shapes.misc, positioning, calc}
+\tikzset{every picture/.style={line width=0.75pt}}
+
+%%%%%%%%%%%%%%%%%%% PARTIALS %%%%%%%%%%%%%%%%%%% 
+
+\RequirePackage{/home/fernando/Documents/TeoremaMilitarV2/xpartials/bettertasks}
+\RequirePackage{/home/fernando/Documents/TeoremaMilitarV2/xpartials/betterhref}
+\RequirePackage{/home/fernando/Documents/TeoremaMilitarV2/xpartials/bettersvg}
+%\RequirePackage{/home/fernando/Documents/TeoremaMilitarV2/xpartials/bettersections}
+%\RequirePackage{/home/fernando/Documents/TeoremaMilitarV2/xpartials/betterstartend}
+
+% ---------------------------------------------------------------------------- %
+%                                  Formatação                                  %
+% ---------------------------------------------------------------------------- %
+
+%%%%%%%%%%%%%%%%%%% Lista de Itens  %%%%%%%%%%%%%%%%%%% 
+
+\RequirePackage[shortlabels]{enumitem}
+\RequirePackage{tasks}
+
+\newenvironment{bEnum}
+{
+\begin{enumerate}[\bfseries I.]
+}
+{\end{enumerate}}
+
+\DeclareTemplateInterface{tasks}{default}{3}
+    {
+      % option        : type      = default
+      label           : tokenlist = \alph*) ,
+      indent          : length    = 2.5em   ,
+      label-format    : tokenlist           ,
+      item-format     : tokenlist           ,
+      label-width     : length    = 1em     ,
+      label-offset    : length    = .3333em ,
+    }
+
+\DeclareInstance{tasks}{gabaritos}{default}{
+label-format = \GabaritoLabel, label-offset = {.2cm}, label-width={1.92cm}, label=\arabic*, item-format={\bfseries \boldmath \refstepcounter{gabarito}}}
+
+\DeclareInstance{tasks}{subgabaritos}{default}{label = \alph*, label-format = \subGabaritoLabel, label-offset={-1cm}, label-width={1.92cm}, item-format={\bfseries \boldmath}}
+
+%%%%%%%%%%%%%%%%%%% Fonte  %%%%%%%%%%%%%%%%%%% 
+
+\RequirePackage{fontawesome5}
+\RequirePackage{fontawesome}
+\RequirePackage{fontspec}
+\RequirePackage[bitstream-charter]{mathdesign}
+\RequirePackage[brazil]{babel}
+\RequirePackage{hyphenat}
+\hyphenation{mate-mática recu-perar confor-midade me-di-ter-râ-ne-o}
+
+
+% ---------------------------------------------------------------------------- %
+%                              Comandos de Design                              %
+% ---------------------------------------------------------------------------- %
+
+%%%%%%%%%%%%%%%%%%% Cores %%%%%%%%%%%%%%%%%%% 
+
+\definecolor{maincolor}{HTML}{0B6E43}
+\definecolor{rosatm}{HTML}{df4781}
+\definecolor{azultm}{HTML}{083446}
+\definecolor{amarelotm}{HTML}{f3ae45}
+
+\newcommand\prova[2]{{ \uppercase (#1 #2)}}
+
+% ---------------------------------------------------------------------------- %
+%                              Comandos de Humanas                             %
+% ---------------------------------------------------------------------------- %
+
+\renewcommand\poemtitle[1]{%
+\begin{center}
+    \normalfont\large\bfseries #1
+    
+    \vspace{3pt}
+\end{center}}
+
+\newcommand{\attrib}[1]{%
+\nopagebreak{\raggedleft\footnotesize #1\par}}
+\renewcommand{\poemtitlefont}{\normalfont\large\itshape\centering}
+
+\newcommand\textoquestoes[1]{%
+\colorbox{maincolor!25}{\emph{Para as próximas #1 questões}}
+
+\vspace{8pt}}
+
+\newenvironment{texto}{%
+\setlength{\parindent}{1em}}{}
+
+% -------------------------------------------------------------------------- %
+%                             Comandos De Exatas                             %
+% -------------------------------------------------------------------------- %
+
+\newcommand\namebond[4][5pt]{\chemmove{\path(#2)--(#3)node[midway, sloped, yshift=#1]{#4};}}
+
+\renewcommand\sin{\qopname\relax o{sen}}
+\renewcommand\arcsin{\qopname\relax o{arcsen}}
+
+\renewcommand\tan{\qopname\relax o{tg}}
+\renewcommand\arctan{\qopname\relax o{arctg}}
+
+\renewcommand\csc{\qopname\relax o{cossec}}
+\renewcommand\cot{\qopname\relax o{cotg}}
+
+\newcommand\segment[1]{\overline{\rm #1}}
+
+\makeatletter
+\DeclareFontFamily{U}{tipa}{}
+\DeclareFontShape{U}{tipa}{m}{n}{<->tipa10}{}
+\newcommand{\ark@char}{{\usefont{U}{tipa}{m}{n}\symbol{62}}}%
+
+\newcommand{\ark}[1]{\mathpalette\ark@ark{#1}}
+
+\newcommand{\ark@ark}[2]{%
+  \sbox0{$\m@th#1#2$}%
+  \vbox{
+    \hbox{\resizebox{\wd0}{\height}{\ark@char}}
+    \nointerlineskip
+    \box0
+  }%
+}
+\makeatother
+
+\newcommand\sqindex[1]{{\mathstrut}^{{\mathstrut}^#1}}
+
+\newcommand\setsep{ \ , \ }
+
+\newcommand\setand{ \ \text{ e } \ }
+
+\newcommand\setor{ \ \text{ ou } \ }
+
+\newcommand\hchar[1]{ \ {#1} \ }
+\newcommand\hcup{\ \cup \ }
+
+\newcommand\fcomposta[1]{\Big( #1 \Big)}
+
+\newcommand\set[1]{ \left\{#1\right\} }
+
+\newcommand\interval[4]{\left#1 \ #3 \ , \ #4 \ \right#2}
+
+\newcommand\tpoint[2]{\br{#1,#2}}
+
+%\newcommand\titulo[1]{{\LARGE \color{maincolor} \textbf{\textsc{#1}}}}
+%\newcommand\subtitulo[1]{{\large{\textbf{\textsc{#1}}}}}
+
+\newcommand\tablerotate[1]{\rotatebox[origin=c]{90}{\vphantom{$\dfrac{a}{a}$} \ #1 \ }}
+
+\newcommand\capitaletter[1]{{\LARGE\color{maincolor}#1}}
+
+\newcommand*{\undernumb}[1]{ \ \underset{#1}{\underline{\hspace{.5cm}}} \ }
+
+\newcommand*{\overnumb}[1]{ \ \overset{#1}{\underline{\hspace{.5cm}}} \ }
+
+\NewCommandCopy{\newTherefore}{\therefore}
+\renewcommand{\therefore}{\ \newTherefore \ }
+
+\newcommand\setpolymerdelim[2]{\def\delimleft{#1}\def\delimright{#2}}
+
+\def\makebraces(#1,#2)#3#4#5{%
+  \edef\delimhalfdim{\the\dimexpr(#1+#2)/2}%
+  \edef\delimvshift{\the\dimexpr(#1-#2)/2}%
+  \chemmove{
+    \node[at=(#4),yshift=(\delimvshift)]
+      {$
+       \left\delimleft
+         \vrule height\delimhalfdim depth\delimhalfdim width0pt
+       \right.
+      $};
+    \node[at=(#5),yshift=(\delimvshift)]
+      {$
+        \left.
+          \vrule height\delimhalfdim depth\delimhalfdim width0pt
+        \right\delimright_{\rlap{#3}}
+      $};
+  }%
+}
+
+
+% -------------------------------------------------------------------------- %
+%                            Pré Definidos em TIKZ                           %
+% -------------------------------------------------------------------------- %
+
+
+
+\newcommand\tikzpic[1]{
+\begin{tcolorbox}[blanker, hbox]
+#1
+\end{tcolorbox}}
+
+\newcommand\centeredtikz[2][1]{%
+\begin{center}
+\begin{tcolorbox}[blanker, hbox]
+\scalebox{#1}{#2}
+\end{tcolorbox}
+\end{center}}
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+\node[shape=circle,draw,inner sep=2pt,line width=1pt] (char) {#1};}}
+
+% ---------------------------------------------------------------------------- %
+%                              Partes do Documento                             %
+% ---------------------------------------------------------------------------- %
+
+\newcommand\nivelI{\faStarO \ Nível I}
+
+\newcommand\nivelII{\faStar \ Nível II}
+
+\titleformat{\subsection}{}{}{5pt}{\Large \color{maincolor} \bfseries \scshape \filcenter}
+
+\titleformat%
+{\section}[hang]%
+{\bfseries}{%
+\thispagestyle{empty}
+\begin{minipage}[t]{0.27\linewidth}  
+\vspace{8pt}% do not remove
+\hspace{18pt}
+{\militaryicon}
+\end{minipage}
+}
+{0pt}%
+{%
+\begin{minipage}[t]{.7\linewidth}%
+    \color{maincolor}
+    \vspace{25pt} % do not remove'
+    {\fontspec[Path = /home/fernando/Documents/TeoremaMilitarV2/]{wine.ttf}\addfontfeature{LetterSpace=20.0} \scshape \Large #1}\\[8pt]
+    \headersvg\\
+    {\fontspec[Path = /home/fernando/Documents/TeoremaMilitarV2/]{wine.ttf}\addfontfeature{LetterSpace=20.0} \scshape  \Large \professor}
+\end{minipage}%
+}
+\titlespacing*{\section}{0pt}{-50pt}{20pt}
+
+
+\makeatletter
+\def\MT@warn@unknown{}
+\makeatother
+    
+
+% -------------------------------------------------------------------------- %
+%                                  XQUESTÃO                                  %
+% -------------------------------------------------------------------------- %
+
+\newcommand{\isRASC}{0}
+
+\newcommand\createxquestoes{%
+\newclipboard{output-xquestoes}
+}
+
+\newcommand\openxquestoes{%
+\openclipboard{output-xquestoes}
+}
+
+\newcounter{xquestao}
+\setcounter{xquestao}{1}
+\newcommand{\wLevel}{0}
+
+\NewDocumentCommand{\xquestao}{+o O{0} +m +m +m}{%
+    {\centering \LARGE \thexquestao \par}
+    \renewcommand{\wLevel}{#2}
+    \renewcommand{\isSOL}{0}
+    \Copy{level}{\ifnum\wLevel=1 {\subsection{\nivelI}} \else{} \fi \ifnum\wLevel=2 {\subsection{\nivelII}} \else{} \fi}
+    \begin{multicols}{2} 
+    \raggedcolumns
+    \IfValueTF{#1}{\Copy{ta\thexquestao}{\begin{tcolorbox}[quote]#1\end{tcolorbox}}}{}
+    \Copy{e\thexquestao}{#3}   
+    \Copy{r\thexquestao}{\taskalternativas{#4}}
+    \end{multicols}
+
+    \makebox[\linewidth][r]{\rule{\textwidth}{1pt}}
+
+    \renewcommand{\isSOL}{1} \taskalternativas{#4}
+    \setcounter{equation}{0}
+    %
+    \begin{tcolorbox}[rascsol, breakable]
+    \Copy{s\thexquestao}{#5}
+    \refstepcounter{solucao}
+    \end{tcolorbox}
+    %
+    \setcounter{passo}{1} 
+    \refstepcounter{xquestao}
+    \newpage}
+
+% ---------------------------------------------------------------------------- %
+%                              Comandos de OUTPUT                              %
+% ---------------------------------------------------------------------------- %
+
+\newcommand{\outputteoria}{%
+\input{teoria.tex}
+\newpage}
+
+\newcommand{\outputgabaritos}{%
+%\input{gabaritos.tex}
+}
+
+\newcommand{\outputexercicios}{%
+\twocolumn\renewcommand{\isSOL}{0}
+\begin{strip}
+\section{\py{nomeDoArquivo}}
+\end{strip}
+\foreach \i in {1,...,\qnumberoutput}{\phantomsection \label{questao:\i}\tmpquestao}
+\onecolumn
+}
+
+\newcommand{\outputsolucao}{%
+\foreach \i in {1,...,\qnumberoutput}{\phantomsection \label{solucao:\i}\tmpsolucao}
+\newpage}
+
+\newcommand{\outputrascunho}{%
+\foreach \i in {1,...,\qnumberoutput}{\phantomsection \label{rascunho:\i}\tmprascunho}
+\newpage}
+
+% ---------------------------------------------------------------------------- %
+%                               Página de Teoria                               %
+% ---------------------------------------------------------------------------- %
+
+\newcounter{itemTeoria} 
+\setcounter{itemTeoria}{1}
+
+\newcommand\exemplos{\textsc{\textbf{Exemplos}}}
+
+\newcommand\itemTeoria[1]{\textbf{\fontsize{10.5pt}{10.5pt}\selectfont \boldmath \scshape \theitemTeoria . #1}\refstepcounter{itemTeoria}}
+
+\tcbset{subteoria/.style={before title = {\setcounter{itemTeoria}{1} \par},
+before upper={\setlength{\parskip}{.5\baselineskip plus 2pt}},
+colframe = amarelotm,
+colback = white,
+halign title=center,
+adjusted title= \vphantom{$\Big( $}#1,
+leftrule = 0.08cm,
+rightrule = 0.08cm,
+bottomrule = 0.08cm,
+sharp corners,
+fonttitle = \bfseries\scshape\large,
+valign = center,
+breakable,}}
+
+\tcbset{teoria/.style={
+    colframe = maincolor,
+    colback = white,
+    before upper={\setlength{\parskip}{.5\baselineskip plus 2pt}},
+    sharp corners,
+    leftrule = 0.1cm, rightrule = 0.1cm, bottomrule = 0.1cm, toprule = 0.1cm,
+    segmentation style={maincolor},
+    fonttitle = \bfseries \scshape\large,
+    title = {\vphantom{$\Big( $} Resumo Teórico $\diamond$ #1  \hfill Teorema Militar $\diamond$ Português},
+    title after break={\vphantom{$\Big( $} Resumo Teórico $\diamond$ #1  \hfill Teorema Militar $\diamond$ Português}
+    }}
+
+\newenvironment{theorypage}
+{
+\pagenumbering{gobble}
+\thispagestyle{empty}
+
+\vspace{-1cm}
+}
+{\clearpage\pagenumbering{arabic}}
+
+% ---------------------------------------------------------------------------- %
+%                              Páginas de Questões                             %
+% ---------------------------------------------------------------------------- %
+
+\newcounter{questao} 
+\setcounter{questao}{1} 
+
+\newcommand{\tmpquestao}{%
+\markexercicios
+%
+\Paste{level}
+
+\Paste{ta\thequestao}
+
+\scalebox{0.4}{\begin{tikzpicture}[baseline={([yshift=-1.8ex]current bounding box.center)}]
+\draw[rounded corners=.8cm, line width=2.25] (-.8, .8) rectangle (4, -.8);
+%circulo
+\draw[fill = maincolor, fill opacity=0.72, line width=2.25] (0, 0) circle (0.8cm) node[inner sep=0.75pt,font=\LARGE,color=maincolor, opacity = 1]  {$\textcolor[rgb]{1,1,1}{\hyperref[solucao:\thequestao]{\twodigits{\thequestao}}}$};
+%retangulo
+\draw[draw opacity=0]  (.8,.8) rectangle node[inner sep=.75pt,font=\Huge,color=maincolor] {\color{maincolor}\hyperref[rascunho:\thequestao]{\faPen*} \hspace{4pt} \hyperref[gabarito]{\faCheckSquareO}} (4,-.8);
+\node[anchor = center] at (0, -.9) {};
+\end{tikzpicture}} \Paste{e\thequestao}
+
+\Paste{r\thequestao}
+\refstepcounter{questao} 
+
+\vspace{10pt}}
+
+
+% ---------------------------------------------------------------------------- %
+%                             Páginas de Gabaritos                             %
+% ---------------------------------------------------------------------------- %
+
+\newcommand\anotacoes{\begin{tcolorbox}[anotacoes, height fixed for = all, height fill, sharp corners]\end{tcolorbox}}
+\newcounter{gabarito} 
+\setcounter{gabarito}{1}
+\newcommand{\taskcolumnsep}{1mm}
+
+\newenvironment{gabaritos}[2][2]{%
+%
+\begin{tcolorbox}[width = \textwidth,
+        left = 0.6cm,
+        right = 0.6cm,
+        top = 0in,
+        bottom = 0in,
+        colframe = white,
+        colback = white]
+\begin{tcolorbox}[colframe = white,
+        colback = white,
+        bottom = 0in,
+        top = 0in]
+\begin{tasks}[style=gabaritos,  after-item-skip = {12pt}, column-sep=#1mm, start = \thegabarito](#2)
+
+}
+{\end{tasks} \end{tcolorbox} \end{tcolorbox}}
+
+
+\newenvironment{subgabaritos}[2][2]{%
+\begin{tcolorbox}[width = \textwidth, left = 0.6cm, right = 0.6cm, top = 0in, bottom = 0in, colframe = white, colback = white]
+%
+\begin{tcolorbox}[colframe = white, colback = white, bottom = 0in, top = 0in]
+%
+\begin{tasks}[style=subgabaritos, after-item-skip = {12pt}, column-sep=#1mm](#2)
+}
+{\end{tasks} \end{tcolorbox} \end{tcolorbox} \refstepcounter{gabarito}}
+
+\tcbset{anotacoes/.style={
+    fonttitle = \large\bfseries,
+    colframe=maincolor, colback = white, title={\vspace{5pt} \textsc{\faBookmarkO \ Anotações} \vspace{5pt}}, height fill}}
+
+% ---------------------------------------------------------------------------- %
+%                                  Label TIKZ                                  %
+% ---------------------------------------------------------------------------- %
+
+\newcommand*\GabaritoLabel[1]{{\scalebox{0.4}{\begin{tikzpicture}[baseline={([yshift=-1.5ex]current bounding box.center)}]
+
+\draw[rounded corners=.8cm, line width=2.25] (-.8, .8) rectangle (4, -.8);
+
+\draw[fill = maincolor, fill opacity=0.72, line width=2.25] (0, 0) circle (0.8cm) node[inner sep=0.75pt, font=\LARGE,color=maincolor, opacity = 1] {$\textcolor[rgb]{1,1,1}{\hyperref[solucao:#1]{\twodigits{#1}}}$};
+
+\draw[draw opacity=0] (.8,.8) rectangle node[inner sep=0.75pt, font=\Huge,color=maincolor] {\textcolor{maincolor}{\hyperref[rascunho:#1]{\faPen*} \hspace{4pt} \hyperref[questao:#1]{\faPencilSquareO}}} (4,-.8);
+\end{tikzpicture}}}}
+
+\newcommand*\subGabaritoLabel[1]{\scalebox{0.4}{\begin{tikzpicture}[baseline={([yshift=-1.5ex]current bounding box.center)}]
+
+\draw[fill = maincolor, fill opacity=0.72, line width=2.25] (0, 0) circle (0.8cm) node[inner sep=0.75pt,font=\LARGE,color=white,opacity=1 ] {$\textcolor[rgb]{1,1,1}{#1}$};
+
+\end{tikzpicture}}}
+
+\newcommand*\respostaLabel[1]{\scalebox{0.4}{\begin{tikzpicture}[baseline={([yshift=-1.5ex]current bounding box.center)}]
+
+\draw[fill = gray!30, fill opacity=0.72, draw = none] (0, 0) circle (0.8cm) node[inner sep=0.75pt,font=\LARGE,color=black,opacity=1 ] {#1}$;
+
+\end{tikzpicture}}}
+
+% ---------------------------------------------------------------------------- %
+%                              Páginas de Soluções                             %
+% ---------------------------------------------------------------------------- %
+
+\newcounter{passo} 
+\setcounter{passo}{1} 
+\newcounter{solucao}
+\setcounter{solucao}{1}
+
+\newcommand\passo{\textbf{\large\textsc{\Roman{passo}}} \refstepcounter{passo}}
+
+%%%%%%%%%
+
+\newcommand\gabarito[1]{\vspace{5pt}
+  
+\textbf{\color{maincolor} GABARITO: \circled{\Copy{g\thesolucao}{\gabflag#1}}}}
+
+%%%%%%%%
+
+\newcommand\subgabarito[2]{%
+
+\vspace{5pt}
+
+\textbf{\color{maincolor} GABARITO:} 
+
+\vspace{-3pt}
+
+\Copy{g\thesolucao}{\subgabflag \begin{subgabaritos}{#1}#2\end{subgabaritos}}}
+
+\newcommand{\tmpsolucao}
+    {%
+    \marksolucoes\setcounter{equation}{0}
+    \begin{tcolorbox}[rascsol, title={\textsc{{\LARGE\roman{solucao}} - Exercício Resolvido \hfill \hyperref[questao:\thesolucao]{{\small \faMailForward}\ Questão} \ \myemail{\faEnvelope \ Monitoria}{\thesolucao} \ \myemail{\faEnvelopeO \ Plantão}{\thesolucao} }}] 
+    \setlength{\parskip}{.5\baselineskip plus 2pt}%
+    \Paste{e\thesolucao}
+
+    \Paste{r\thesolucao}
+    \tcblower
+    
+    {\setlength{\parskip}{6pt} \Paste{s\thesolucao}}
+    
+    \end{tcolorbox}\refstepcounter{solucao}\pagebreak\setcounter{passo}{1}
+    }
+
+% ---------------------------------------------------------------------------- %
+%                                   Rascunho                                   %
+% ---------------------------------------------------------------------------- %
+   
+\newcounter{rascunho} 
+\setcounter{rascunho}{1}   
+    
+\newcommand{\tmprascunho}
+    {%
+    \markrascunhos
+    \begin{tcolorbox}[rascsol, height fixed for=all, height fill,
+    title={\textsc{{\LARGE\roman{rascunho}} - Folha de Rascunho \hfill \hyperref[questao:\therascunho]{{\small \faMailForward} \ Questão} \ \hyperref[gabarito]{{\small \faMailForward} \ Gabarito} \ \hyperref[solucao:\therascunho]{{\small \faMailForward} \ Solução} \ \myemail{\faEnvelope \ Monitoria}{\therascunho} \ \myemail{\faEnvelopeO \ Plantão}{\therascunho} }},
+    ]
+    \setlength{\parskip}{.5\baselineskip plus 2pt}
+    \Paste{e\therascunho}
+    
+    \Paste{rs\therascunho}
+    \tcblower
+    
+    \end{tcolorbox}\pagebreak\refstepcounter{rascunho}}
+  
+    
+% ---------------------------------------------------------------------------- %
+%                           Início e Fim do Documento                          %
+% ---------------------------------------------------------------------------- %
+
+\newcommand\imagepage[1]{%
+\begin{titlepage}
+\newgeometry{noheadfoot=true, top=0in, bottom=0in, left=0in, right= 0in}
+\begin{tikzpicture}[remember picture,overlay]
+   \node[anchor=center] at (current page.center) {\includegraphics[width = \paperwidth, height = \paperheight]{#1}};
+\end{tikzpicture}
+\end{titlepage}
+\newpage
+}
+
+
+\newcommand\isXq{1}
+
+\AtBeginDocument{%
+  \raggedcolumns
+  \setlength\abovedisplayskip{6pt}%
+  \setlength\belowdisplayskip{6pt}%
+  \ifnum\isXq=0 {\createxquestoes} \else {\openxquestoes} \fi%
+  \includepdf{\py{pdfcover}}
+  \setcounter{page}{1}
+  }
+  
+\newcommand\qnumberinput{
+  \newwrite\questoes
+  \immediate\openout\questoes=output-questoes.tex\relax
+  \addtocounter{xquestao}{-1}
+  \immediate\write\questoes{\thexquestao}
+  \immediate\closeout\questoes
+}
+
+
+\DeclareOption{xquestoes}{\renewcommand{\isXq}{0} \AtEndDocument{\qnumberinput} \pagestyle{empty}}
+
+\ProcessOptions\relax
+
+\CatchFileDef{\qnumberoutput}{output-questoes.tex}
+
+%pdfcompresslevel=0
+%pdfobjcompresslevel=0
