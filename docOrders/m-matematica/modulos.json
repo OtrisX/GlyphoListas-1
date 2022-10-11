@@ -6,8 +6,12 @@
                 "label": "Frações",
                 "description": " ",
                 "value": "m-fracoes"
-            }
-        
+            },
+            {
+                "label": "Exponenciação",
+                "description": " ",
+                "value": "m-exponenciacao"
+            },
         ]
     }  
 }
